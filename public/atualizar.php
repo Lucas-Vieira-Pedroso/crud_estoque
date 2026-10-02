@@ -1,6 +1,6 @@
 <?php
 
-include "../infra/conexao.php";
+include "../infra/conn.php";
 
 $id = $_POST["id"];
 $nome = $_POST["nome"];
@@ -10,10 +10,10 @@ $descricao = $_POST["descricao"];
 $data_validade = $_POST["data_validade"];
 $preco = $_POST["preco"];
 
-$sql = "UPDATE produtos SET titulo=?,categoria=?,quantidade=?,descricao=?,data_validade=?,preco=? WHERE id = ?";
+$sql = "UPDATE produtos SET nome=?,categoria=?,quantidade=?,descricao=?,data_validade=?,preco=? WHERE id = ?";
 
 
-$stmt = mysqli_prepare($conexao, $sql);
+$stmt = mysqli_prepare($conn, $sql);
 
 if ($stmt){
 

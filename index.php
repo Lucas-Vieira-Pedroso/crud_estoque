@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/infra/conn.php';
-$resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_validade, categoria, descricao FROM produtos ORDER BY id DESC");
+$resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_validade, categoria, descricao FROM produtos");
 ?>
 <html lang="en">
 <head>
