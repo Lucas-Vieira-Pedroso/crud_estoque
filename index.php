@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/infra/conn.php';
+$resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_validade, categoria, descricao FROM produtos ORDER BY id DESC");
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -29,6 +33,39 @@
         <input type="date" name="data_validade" id="data_validade" required>
         <br>
         <button type="submit" value="Adicionar Produto">Adicionar Produto</button>
+    </form>
+
+    <h2>Produtos cadastrados</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Data de validade</th>
+                <th>Categoria</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if ($resultadoProdutos && $resultadoProdutos->num_rows > 0): ?>
+                <?php while ($produto = $resultadoProdutos->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($produto['nome'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars((string) $produto['quantidade'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td>R$ <?= htmlspecialchars((string) $produto['preco'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars($produto['data_validade'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars($produto['categoria'], ENT_QUOTES, 'UTF-8') ?></td>
+                        <td><?= htmlspecialchars($produto['descricao'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">Nenhum produto cadastrado.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
 
 
 </body>
