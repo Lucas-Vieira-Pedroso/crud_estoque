@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . '/infra/conn.php';
-$resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_validade, categoria, descricao FROM produtos");
+$resultadoProdutos = $conexao->query("SELECT id, nome, quantidade, preco, data_validade, categoria, descricao FROM produtos");
 ?>
 <html lang="en">
 <head>
@@ -13,7 +13,7 @@ $resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_valid
     <h1>Estoque</h1>
 
     <h2>adicionar produto</h2>
-    <form method="post">
+    <form action="public/cadastrar.php" method="post">
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" required>
         <br>
@@ -45,6 +45,7 @@ $resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_valid
                 <th>Data de validade</th>
                 <th>Categoria</th>
                 <th>Descrição</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -57,11 +58,21 @@ $resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_valid
                         <td><?= htmlspecialchars($produto['data_validade'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td><?= htmlspecialchars($produto['categoria'], ENT_QUOTES, 'UTF-8') ?></td>
                         <td><?= htmlspecialchars($produto['descricao'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                        <td>
+                            <form action="public/editar.php" method="get" style="display: inline;">
+                                <input type="hidden" name="id" value="<?= (int) $produto['id'] ?>">
+                                <button type="submit">Editar</button>
+                            </form>
+                            <form action="public/excluir.php" method="post" style="display: inline;" onsubmit="return confirm('Deseja excluir este produto?');">
+                                <input type="hidden" name="id" value="<?= (int) $produto['id'] ?>">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="6">Nenhum produto cadastrado.</td>
+                    <td colspan="7">Nenhum produto cadastrado.</td>
                 </tr>
             <?php endif; ?>
         </tbody>

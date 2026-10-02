@@ -1,6 +1,6 @@
 <?php
 
-include "../infra/conn.php";
+require_once __DIR__ . '/../infra/conn.php';
 
 $id = $_POST["id"];
 $nome = $_POST["nome"];
@@ -13,13 +13,14 @@ $preco = $_POST["preco"];
 $sql = "UPDATE produtos SET nome=?,categoria=?,quantidade=?,descricao=?,data_validade=?,preco=? WHERE id = ?";
 
 
-$stmt = mysqli_prepare($conn, $sql);
+$stmt = $conexao->prepare($sql);
 
 if ($stmt){
 
-    mysqli_stmt_bind_param($stmt, "ssisiii", $nome, $categoria, $quantidade, $descricao, $data_validade, $preco, $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    $stmt->bind_param("ssissdi", $nome, $categoria, $quantidade, $descricao, $data_validade, $preco, $id);
+    $stmt->execute();
+    $stmt->close();
 
 }
 header("Location: ../index.php");
+exit;
