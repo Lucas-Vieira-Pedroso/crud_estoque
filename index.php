@@ -13,7 +13,7 @@ $resultadoProdutos = $conexao->query("SELECT nome, quantidade, preco, data_valid
     <h1>Estoque</h1>
 
     <h2>adicionar produto</h2>
-    <form action="adicionar_produto.php" method="post">
+    <form method="post">
         <label for="nome">Nome:</label>
         <input type="text" name="nome" id="nome" required>
         <br>
